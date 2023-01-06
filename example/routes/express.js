@@ -63,7 +63,13 @@ export default (app, provider) => {
 
       switch (prompt.name) {
         case 'login': {
-          console.log("XXXXXXX");
+
+          if(client?.clientId === 'ping') {
+            console.log('do incode stuff')
+          }
+          
+          console.log("client:::")
+          console.log(client);
           return res.render('login', {
             client,
             uid,

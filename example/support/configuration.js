@@ -4,7 +4,7 @@ export default {
       client_id: 'ping',
       client_secret: 'abc',
       grant_types: ['refresh_token', 'authorization_code'],
-      redirect_uris: ['http://localhost:8080', 'http://localhost:8080/callback', 'http://localhost:8080/auth/callback', 'http://sso-client.dev/providers/8/open_id'],
+      redirect_uris: ['http://localhost:8080', 'http://localhost:8080/callback', 'http://localhost:8080/auth/callback', 'https://oidcdebugger.com/debug'],
     }
   ],
   scopes: [

@@ -1,0 +1,44 @@
+<html>
+
+<head>
+    <title> Verify </title>
+    <style>
+        .box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .imgwrap {
+            width: 50%;
+            /*or whatever you choose*/
+            margin: auto;
+        }
+
+        .imgwrap img {
+            display: block;
+            width: 100%;
+            max-width: 500px;
+            /*actual image width*/
+            height: auto;
+            /* maintain aspect ratio*/
+            margin: auto;
+            /*optional centering of image*/
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <div class="imgwrap">
+            <img src="./qr.png" width="100" height="100">
+        </div>
+    </div>
+    <div class="imgwrap">
+        <form autocomplete="off" action="/interaction/login" method="post">
+            <button type="submit" class="login login-submit">Sign-in</button>
+        </form>
+    </div>
+</body>
+
+</html>

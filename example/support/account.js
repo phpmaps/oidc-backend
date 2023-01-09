@@ -19,6 +19,11 @@ class Account {
    *   or not return them in id tokens but only userinfo and so on.
    */
   async claims(use, scope) { // eslint-disable-line no-unused-vars
+    console.log("====CLAIMS======")
+    console.log(use);
+    console.log("====SCOPE======")
+    console.log(scope);
+    
     if (this.profile) {
       return {
         sub: this.accountId, // it is essential to always return a sub claim
@@ -42,7 +47,7 @@ class Account {
         region: '000',
         street_address: '000',
       },
-      birthdate: '1987-10-16',
+      birthdate: '1978-04-25',
       email: 'johndoe@example.com',
       email_verified: false,
       family_name: 'Doe',
@@ -72,6 +77,7 @@ class Account {
   }
 
   static async findByLogin(login) {
+    console.log("findByLogin")
     if (!logins.get(login)) {
       logins.set(login, new Account(login));
     }

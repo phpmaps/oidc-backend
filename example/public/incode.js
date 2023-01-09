@@ -14,6 +14,8 @@ function next() {
     document.getElementById("radios").classList.add("radios-none");
     document.getElementById('qr-section').style.visibility = 'visible';
 
+    console.log(flow);
+
     interval = setInterval(myCallback, 500, flow);
 
     document.getElementById('timer').innerHTML =
@@ -64,8 +66,6 @@ document.getElementById('selfie').addEventListener(
     },
     false
 );
-
-
 
 document.getElementById('face-login').addEventListener(
     'change',
@@ -155,16 +155,12 @@ function postwith(to, p) {
 }
 
 
-
-
-
-
 flow = JSON.parse(document.getElementById('gov_selfie').value);
 updateQr(flow.url)
 
 function myCallback(f) {
 
     ///omni/get/onboarding/status?id=5e9f3e3e1d0ef70011173fce
-    console.log(f.url);
+    //console.log(f.url);
 }
 

@@ -3,15 +3,17 @@ import { executiveToken } from "../api/executive-token.js";
 import { start } from '../api/start.js';
 
 export class Auth {
+    auth;
+    interviewId;
     token;
     apikey;
     apiversion;
-    flowid;
+    flowId;
 
     constructor(flowId) {
         this.apikey = process.env.API_KEY;
         this.apiversion = process.env.API_VERSION;
-        this.flowid = flowId;
+        this.flowId = flowId;
     }
 
     async getLoginHeader() {
@@ -25,7 +27,11 @@ export class Auth {
     }
 
     async getSessionHeader() {
-        this.token = await start(this.flowId);
+        console.log("getSessionHeader");
+        console.log(this.flowId);
+        this.auth = await start(this.flowId);
+        this.token = this.auth.token;
+        this.interviewId = this.auth.interviewId;
         const header = new HttpHeader();
         header.append('Content-Type', "application/json");
         header.append('x-incode-hardware-id', this.token);
@@ -33,7 +39,8 @@ export class Auth {
         //header.append('x-api-key', process.env.API_KEY);
         return {
             header: header,
-            token: this.token
+            token: this.token,
+            interviewId: this.interviewId
         };
     }
 };

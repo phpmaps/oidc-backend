@@ -6,10 +6,9 @@ dotenv.config();
 
 export const executiveToken = async () => {
     const endpoint = "executive/log-in";
-    const fix = 'https://demo-api.incodesmile.com/0';
 
     //Tweak Incode's URL removing the /0 specifically for the executive login endpoint
-    let url = `${fix.substring(0, process.env.API_URL.length - 2)}/${endpoint}`;
+    let url = `${process.env.API_URL.substring(0, process.env.API_URL.length - 2)}/${endpoint}`;
 
     const params = {
         email: process.env.USERNAME,

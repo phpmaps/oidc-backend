@@ -1,5 +1,7 @@
 # oidc-provider
 
+https://auth.pingone.com/09862d22-4554-4677-abf7-72fea5ae1fa0/davinci/policy/b9735cd9[…]gone.com/09862d22-4554-4677-abf7-72fea5ae1fa0/davinci/testrp
+
 docker build . -t doogs/nodejs-oidc-provider
 docker run -p 3000:3000 -d doogs/nodejs-oidc-provider
 

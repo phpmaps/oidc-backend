@@ -1,7 +1,7 @@
 
 
-export const flatten = (obj: any) => {
-    const flattened: any = {}
+export const flatten = (obj) => {
+    const flattened = {}
     Object.keys(obj).forEach((key) => {
       const value = obj[key]
   

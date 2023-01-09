@@ -51,6 +51,10 @@
       ;
     }
 
+    .qr-section-none {
+      display: none;
+    }
+
     .qr-section {
       display: flex;
       flex-direction: column;
@@ -60,6 +64,11 @@
       height: 100%;
       padding: 0;
       margin: 0;
+      visibility: hidden;
+    }
+
+    .radios-none {
+      display: none;
     }
 
     .radios {
@@ -102,6 +111,20 @@
     .timer {
       margin-top: 10px;
     }
+
+    .top-buffer {
+      margin-top: 40px;
+    }
+
+    .top-buffer-less {
+      margin-top: 10px;
+    }
+
+    .buffer {
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+
   </style>
   <link rel="shortcut icon" href="/ic.webp">
   <link href="/client.bd129c4516c639d0e071.css" rel="stylesheet">
@@ -117,13 +140,13 @@
 
     <!-- <p class="inc-subheading">OIDC and Ping Integration Testing from Incode</p> -->
 
-    <div class="radios">
-      <h3 class="site-preview-heading">Select a flow</h3>
+    <div id="radios" class="radios">
+      <h3 class="top-buffer site-preview-heading">Select a flow</h3>
       <form class="usa-form">
         <fieldset class="usa-fieldset">
           <div class="usa-radio">
             <input class="usa-radio__input usa-radio__input--tile" id="id-selfie" type="radio" name="flows"
-              value="id-selfie" checked="checked">
+              value="id-selfie">
             <label class="usa-radio__label" for="id-selfie">
               Government Document + Selfie
               <span class="usa-checkbox__label-description">Includes phone, email, ID capture and face capture
@@ -145,18 +168,27 @@
           </div>
         </fieldset>
       </form>
+
+      <button id="nextBtn" class="top-buffer usa-button usa-button--active">Next</button>
+
     </div>
 
-    <div class="qr-section">
-      <h3 class="qr-adjust site-preview-heading">Scan QR to verify</h3>
+    <div id="qr-section" class="qr-section">
+      
+      <h3 class="top-buffer qr-adjust site-preview-heading">Scan QR to verify</h3>
 
       <div id="container"></div>
 
-      <div class="timer">Time remaining: <span id="timer"></span></div>
+      <button id="backBtn" class="top-buffer-less usa-button usa-button--active">Back</button>
+
+      <div class="top-buffer timer">Time remaining: <span id="timer"></span></div>
     </div>
 
     <div id="root" class="root"></div>
     <input type="hidden" id="uuid" value="<%= uid %>" />
+    <input type="hidden" id="gov_selfie" value="<%= flows.gov_selfie %>" />
+    <input type="hidden" id="phone_selfie" value="<%= flows.phone_selfie %>" />
+    <input type="hidden" id="face_login" value="<%= flows.face_login %>" />
 
   </div>
 

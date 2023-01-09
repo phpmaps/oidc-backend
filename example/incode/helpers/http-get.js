@@ -11,6 +11,16 @@ export const doGet = async (url, headers, params) => {
         response = await fetch(url, { headers: headers });
         json = await response.json();
 
+        console.log(
+            {
+                status: response.status,
+                headers: response.headers,
+                error: null,
+                body: json,
+                index: url
+            }
+        )
+
         return {
             status: response.status,
             headers: response.headers,

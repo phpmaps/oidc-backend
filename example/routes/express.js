@@ -8,6 +8,8 @@ import { urlencoded } from 'express'; // eslint-disable-line import/no-unresolve
 
 import Account from '../support/account.js';
 
+import { initFlow } from '../incode/initFlow.js';
+
 const body = urlencoded({ extended: false });
 
 const keys = new Set();
@@ -64,24 +66,54 @@ export default (app, provider) => {
       switch (prompt.name) {
         case 'login': {
 
-          if(client?.clientId === 'ping') {
+          if (client?.clientId === 'ping') {
             console.log('do incode stuff')
+
+            const gov_selfie = await initFlow('63bbad0e38905700e07376dd');
+            const phone_selfie = await initFlow('63bbae1638905700e07377da'); 
+            const face_login = await initFlow('63bbae825b09e48e03781938');
+
+            const flows = {
+              gov_selfie: JSON.stringify(gov_selfie),
+              phone_selfie: JSON.stringify(phone_selfie),
+              face_login: JSON.stringify(face_login)
+            }
+
+            console.log(flows);
+
+            console.log("client:::")
+            console.log(client);
+
+            return res.render('login', {
+              client,
+              uid,
+              flows,
+              details: prompt.details,
+              params,
+              title: 'Sign-in',
+              session: session ? debug(session) : undefined,
+              dbg: {
+                params: debug(params),
+                prompt: debug(prompt),
+              },
+            });
+          } else {
+
+            return res.render('login', {
+              client,
+              uid,
+              onboardingUrls,
+              details: prompt.details,
+              params,
+              title: 'Sign-in',
+              session: session ? debug(session) : undefined,
+              dbg: {
+                params: debug(params),
+                prompt: debug(prompt),
+              },
+            });
+
           }
-          
-          console.log("client:::")
-          console.log(client);
-          return res.render('login', {
-            client,
-            uid,
-            details: prompt.details,
-            params,
-            title: 'Sign-in',
-            session: session ? debug(session) : undefined,
-            dbg: {
-              params: debug(params),
-              prompt: debug(prompt),
-            },
-          });
         }
         case 'consent': {
           return res.render('interaction', {

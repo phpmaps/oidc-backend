@@ -4,15 +4,16 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-export const executiveToken = async () => {
-    const endpoint = "executive/log-in";
+export const start = async (flowId) => {
+    const endpoint = "omni/start";
 
     //Tweak Incode's URL removing the /0 specifically for the executive login endpoint
     let url = `${process.env.API_URL.substring(0, process.env.API_URL.length - 2)}/${endpoint}`;
 
     const params = {
-        email: process.env.USERNAME,
-        password: process.env.PASSWORD
+        configurationId: flowId,
+        countryCode: "ALL",
+        language: "en-US"
     }
 
     const header = new HttpHeader();

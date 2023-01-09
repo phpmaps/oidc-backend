@@ -1,3 +1,5 @@
+let flow;
+
 const updateQr = (text) => {
     var qrcode = new QRCode({ content: text, join: true });
     var svg = qrcode.svg();
@@ -5,12 +7,45 @@ const updateQr = (text) => {
 
 }
 
+function next() {
+    //document.getElementById('radios').style.visibility = 'hidden';
+    document.getElementById("radios").classList.remove("radios");
+    document.getElementById("radios").classList.add("radios-none");
+    document.getElementById('qr-section').style.visibility = 'visible';
+
+    document.getElementById('timer').innerHTML =
+        05 + ":" + 00;
+    startTimer();
+}
+
+function back() {
+    document.getElementById("radios").classList.add("radios");
+    document.getElementById("radios").classList.remove("radios-none");
+    document.getElementById('qr-section').style.visibility = 'hidden';
+}
+
+document.getElementById('nextBtn').addEventListener(
+    'click',
+    (evt, val) => {
+        next()
+    },
+    false
+);
+
+document.getElementById('backBtn').addEventListener(
+    'click',
+    (evt, val) => {
+        back()
+    },
+    false
+);
+
 document.getElementById('id-selfie').addEventListener(
     'change',
     (evt, val) => {
-        console.log(evt)
-        console.log(evt.target.id)
-        updateQr(evt.target.id)
+        flow = JSON.parse(document.getElementById('gov_selfie').value);
+        console.log(flow)
+        updateQr(flow.url)
     },
     false
 );
@@ -19,9 +54,9 @@ document.getElementById('id-selfie').addEventListener(
 document.getElementById('selfie').addEventListener(
     'change',
     (evt, val) => {
-        console.log(evt)
-        console.log(evt.target.id)
-        updateQr(evt.target.id)
+        flow = JSON.parse(document.getElementById('phone_selfie').value);
+        console.log(flow)
+        updateQr(flow.url)
     },
     false
 );
@@ -31,9 +66,9 @@ document.getElementById('selfie').addEventListener(
 document.getElementById('face-login').addEventListener(
     'change',
     (evt, val) => {
-        console.log(evt)
-        console.log(evt.target.id)
-        updateQr(evt.target.id)
+        flow = JSON.parse(document.getElementById('face_login').value);
+        console.log(flow)
+        updateQr(flow.url)
     },
     false
 );
@@ -43,18 +78,16 @@ document.getElementById('container').addEventListener(
     (evt) => {
         alert('clicked')
         const uuid = document.getElementById('uuid').value;
-        postwith( `/interaction/${uuid}/login`, {
-            login:'user' ,
-            password:'password'
+        postwith(`/interaction/${uuid}/login`, {
+            login: 'user',
+            password: 'password'
         });
         //doInteractionLogin();
     },
     false
 )
 
-document.getElementById('timer').innerHTML =
-    05 + ":" + 00;
-startTimer();
+
 
 
 function startTimer() {
@@ -82,7 +115,7 @@ function checkSecond(sec) {
 
 
 function doInteractionLogin() {
-    
+
     const url = `http://localhost:3000/interaction/${uuid}/login`;
     console.log(url);
     const data = { login: 'example', password: 'password' };
@@ -102,26 +135,26 @@ function doInteractionLogin() {
         });
 }
 
-function postwith (to,p) {
+function postwith(to, p) {
     var myForm = document.createElement("form");
-    myForm.method="post" ;
-    myForm.action = to ;
+    myForm.method = "post";
+    myForm.action = to;
     for (var k in p) {
-      var myInput = document.createElement("input") ;
-      myInput.setAttribute("name", k) ;
-      myInput.setAttribute("value", p[k]);
-      myForm.appendChild(myInput) ;
+        var myInput = document.createElement("input");
+        myInput.setAttribute("name", k);
+        myInput.setAttribute("value", p[k]);
+        myForm.appendChild(myInput);
     }
-    document.body.appendChild(myForm) ;
-    myForm.submit() ;
-    document.body.removeChild(myForm) ;
-  }
-   
+    document.body.appendChild(myForm);
+    myForm.submit();
+    document.body.removeChild(myForm);
+}
 
 
 
 
 
 
-updateQr('id-selfie')
+flow = JSON.parse(document.getElementById('gov_selfie').value);
+updateQr(flow.url)
 

@@ -71,6 +71,7 @@
     "koa": "^2.13.4",
     "lodash": "^4.17.21",
     "nanoid": "^4.0.0",
+    "node-fetch": "^3.3.0",
     "object-hash": "^3.0.0",
     "oidc-token-hash": "^5.0.1",
     "quick-lru": "^6.1.1",

@@ -1,4 +1,5 @@
 let flow;
+let interval;
 
 const updateQr = (text) => {
     var qrcode = new QRCode({ content: text, join: true });
@@ -13,6 +14,8 @@ function next() {
     document.getElementById("radios").classList.add("radios-none");
     document.getElementById('qr-section').style.visibility = 'visible';
 
+    interval = setInterval(myCallback, 500, flow);
+
     document.getElementById('timer').innerHTML =
         05 + ":" + 00;
     startTimer();
@@ -22,6 +25,7 @@ function back() {
     document.getElementById("radios").classList.add("radios");
     document.getElementById("radios").classList.remove("radios-none");
     document.getElementById('qr-section').style.visibility = 'hidden';
+    clearInterval(interval)
 }
 
 document.getElementById('nextBtn').addEventListener(
@@ -157,4 +161,10 @@ function postwith(to, p) {
 
 flow = JSON.parse(document.getElementById('gov_selfie').value);
 updateQr(flow.url)
+
+function myCallback(f) {
+
+    ///omni/get/onboarding/status?id=5e9f3e3e1d0ef70011173fce
+    console.log(f.url);
+}
 

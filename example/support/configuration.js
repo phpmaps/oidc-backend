@@ -4,7 +4,7 @@ export default {
       client_id: 'ping',
       client_secret: 'abc',
       grant_types: ['refresh_token', 'authorization_code'],
-      redirect_uris: ['http://localhost:8080', 'http://localhost:8080/callback', 'http://localhost:8080/auth/callback', 'https://oidcdebugger.com/debug'],
+      redirect_uris: ['http://localhost:8080', 'http://localhost:8080/callback', 'http://localhost:8080/auth/callback', 'https://oidcdebugger.com/debug', 'https://auth.pingone.com/09862d22-4554-4677-abf7-72fea5ae1fa0/davinci/oauth2/callback'],
     }
   ],
   scopes: [

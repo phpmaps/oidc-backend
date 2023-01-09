@@ -2,6 +2,7 @@
 
 import * as path from 'node:path';
 import * as url from 'node:url';
+import dotenv from 'dotenv';
 
 import { dirname } from 'desm';
 import express from 'express'; // eslint-disable-line import/no-unresolved
@@ -14,6 +15,7 @@ import configuration from './support/configuration.js';
 import routes from './routes/express.js';
 
 const __dirname = dirname(import.meta.url);
+dotenv.config();
 
 const { PORT = 3000, ISSUER = `http://localhost:${PORT}` } = process.env;
 configuration.findAccount = Account.findAccount;
@@ -70,6 +72,8 @@ try {
 
   
   routes(app, provider);
+  console.log("environment variables")
+  console.log(process.env)
   app.use(provider.callback());
   server = app.listen(PORT, () => {
     console.log(`application is listening on port ${PORT}, check its /.well-known/openid-configuration`);

@@ -9,7 +9,7 @@ export const start = async (flowId) => {
     const fix = 'https://demo-api.incodesmile.com/0';
 
     //Tweak Incode's URL removing the /0 specifically for the executive login endpoint
-    let url = `${fix.substring(0, process.env.API_URL.length - 2)}/${endpoint}`;
+    let url = `${fix.substring(0, fix.length - 2)}/${endpoint}`;
 
     const params = {
         configurationId: flowId,

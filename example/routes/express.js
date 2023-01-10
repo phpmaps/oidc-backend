@@ -23,9 +23,9 @@ const debug = (obj) => querystring.stringify(Object.entries(obj).reduce((acc, [k
 });
 
 export default (app, provider) => {
-  if (provider?.errors) {
-    const { constructor: { errors: { SessionNotFound } } } = provider;
-  }
+  // if (provider?.errors) {
+  //   const { constructor: { errors: { SessionNotFound } } } = provider;
+  // }
 
   app.use((req, res, next) => {
     const orig = res.render;

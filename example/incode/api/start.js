@@ -5,8 +5,6 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 export const start = async (flowId) => {
-    console.log("HELP")
-    console.log(flowId)
     const endpoint = "omni/start";
 
     //Tweak Incode's URL removing the /0 specifically for the executive login endpoint
@@ -17,10 +15,6 @@ export const start = async (flowId) => {
         countryCode: "ALL",
         language: "en-US"
     }
-
-    console.log("-start-params-")
-    console.log(params);
-    console.log("---")
 
     const header = new HttpHeader();
     header.append('Content-Type', "application/json");
@@ -37,5 +31,4 @@ export const start = async (flowId) => {
     } catch (error) {
         throw Error(`error using ${endpoint}`);
     }
-
 };

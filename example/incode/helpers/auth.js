@@ -27,8 +27,6 @@ export class Auth {
     }
 
     async getSessionHeader() {
-        console.log("getSessionHeader");
-        console.log(this.flowId);
         this.auth = await start(this.flowId);
         this.token = this.auth.token;
         this.interviewId = this.auth.interviewId;
@@ -42,5 +40,13 @@ export class Auth {
             token: this.token,
             interviewId: this.interviewId
         };
+    }
+
+    static createHeader(token) {
+        const header = new HttpHeader();
+        header.append('Content-Type', "application/json");
+        header.append('x-incode-hardware-id', token);
+        header.append('api-version', "1.0");
+        return header;
     }
 };

@@ -9,15 +9,11 @@ const updateQr = (text) => {
 }
 
 function next() {
-    //document.getElementById('radios').style.visibility = 'hidden';
     document.getElementById("radios").classList.remove("radios");
     document.getElementById("radios").classList.add("radios-none");
     document.getElementById('qr-section').style.visibility = 'visible';
 
-    console.log(flow);
-
-    interval = setInterval(myCallback, 500, flow);
-
+    interval = setInterval(myCallback, 2000, flow);
     document.getElementById('timer').innerHTML =
         05 + ":" + 00;
     startTimer();
@@ -50,7 +46,6 @@ document.getElementById('id-selfie').addEventListener(
     'change',
     (evt, val) => {
         flow = JSON.parse(document.getElementById('gov_selfie').value);
-        console.log(flow)
         updateQr(flow.url)
     },
     false
@@ -61,7 +56,6 @@ document.getElementById('selfie').addEventListener(
     'change',
     (evt, val) => {
         flow = JSON.parse(document.getElementById('phone_selfie').value);
-        console.log(flow)
         updateQr(flow.url)
     },
     false
@@ -71,7 +65,6 @@ document.getElementById('face-login').addEventListener(
     'change',
     (evt, val) => {
         flow = JSON.parse(document.getElementById('face_login').value);
-        console.log(flow)
         updateQr(flow.url)
     },
     false
@@ -80,18 +73,14 @@ document.getElementById('face-login').addEventListener(
 document.getElementById('container').addEventListener(
     'click',
     (evt) => {
-        alert('clicked')
         const uuid = document.getElementById('uuid').value;
         postwith(`/interaction/${uuid}/login`, {
-            login: 'user',
-            password: 'password'
+            id: flow.token,
+            interview: flow.interviewId
         });
-        //doInteractionLogin();
     },
     false
 )
-
-
 
 
 function startTimer() {
@@ -106,7 +95,6 @@ function startTimer() {
 
     document.getElementById('timer').innerHTML =
         m + ":" + s;
-    console.log(m)
     setTimeout(startTimer, 1000);
 
 }
@@ -118,22 +106,20 @@ function checkSecond(sec) {
 }
 
 
-function doInteractionLogin() {
+function doGet(url) {
 
-    const url = `http://localhost:3000/interaction/${uuid}/login`;
-    console.log(url);
-    const data = { login: 'example', password: 'password' };
-    fetch(url, {
-        method: 'POST',
+    return fetch(url, {
+        method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-    })
-        .then((response) => response.json())
-        .then((data) => {
-            console.log('Success:', data);
-        })
+            'X-Incode-Hardware-Id': flow.token,
+            'api-version': '1.0'
+
+        }
+    }).then((response) => response.json())
+        // .then((data) => {
+        //     console.log('Success:', data);
+        // })
         .catch((error) => {
             console.error('Error:', error);
         });
@@ -158,9 +144,16 @@ function postwith(to, p) {
 flow = JSON.parse(document.getElementById('gov_selfie').value);
 updateQr(flow.url)
 
-function myCallback(f) {
-
-    ///omni/get/onboarding/status?id=5e9f3e3e1d0ef70011173fce
-    //console.log(f.url);
+async function myCallback(f) {
+    const statusUrl = `https://demo-api.incodesmile.com/0/omni/get/onboarding/status?id=${flow.interviewId}`;
+    const results = await doGet(statusUrl);
+    console.log(results.onboardingStatus);
+    if(results.onboardingStatus === 'ONBOARDING_FINISHED') {
+        const uuid = document.getElementById('uuid').value;
+        postwith(`/interaction/${uuid}/login`, {
+            id: flow.token,
+            interview: flow.interviewId
+        });
+    }
 }
 

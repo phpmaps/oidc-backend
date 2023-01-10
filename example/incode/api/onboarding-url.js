@@ -5,10 +5,7 @@ dotenv.config();
 
 export const getOnboardingUrl = async (header) => {
     const endpoint = `omni/onboarding-url?clientId=${process.env.CLIENT_ID}`;
-    
     const url = `https://demo-api.incodesmile.com/0/${endpoint}`;
-    console.log("onboarding-url")
-    console.log(url)
 
     try {
         return doGet(url, header);

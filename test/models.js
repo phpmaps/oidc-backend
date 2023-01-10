@@ -73,7 +73,7 @@ export class Account {
   }
 
   claims(use, scope, claims, rejected) {
-    console.log("--------------claims---------------")
+    console.log(":::models-claims");
     assert.equal(typeof use, 'string');
     assert.equal(typeof scope, 'string');
     assert.equal(typeof claims, 'object');

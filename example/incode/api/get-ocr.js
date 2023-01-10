@@ -1,5 +1,5 @@
 import dotenv from 'dotenv';
-import { doGet } from '../helpers/http-get';
+import { doGet } from '../helpers/http-get.js';
 
 dotenv.config();
 

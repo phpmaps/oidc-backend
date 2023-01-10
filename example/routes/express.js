@@ -8,7 +8,7 @@ import { urlencoded } from 'express'; // eslint-disable-line import/no-unresolve
 
 import Account from '../support/account.js';
 
-import { initFlow } from '../incode/initFlow.js';
+import { init } from '../incode/init.js';
 
 const body = urlencoded({ extended: false });
 
@@ -65,25 +65,17 @@ export default (app, provider) => {
 
       switch (prompt.name) {
         case 'login': {
+          res.set("Content-Security-Policy", "connect 'https://demo-api.incodesmile.com'")
 
           if (client?.clientId === 'ping') {
-            console.log('do incode stuff')
-
-            const gov_selfie = await initFlow('63bbad0e38905700e07376dd');
-            const phone_selfie = await initFlow('63bbae1638905700e07377da'); 
-            const face_login = await initFlow('63bbae825b09e48e03781938');
-
+            const gov_selfie = await init('63bbad0e38905700e07376dd');
+            const phone_selfie = await init('63bbae1638905700e07377da');
+            const face_login = await init('63bbae825b09e48e03781938');
             const flows = {
               gov_selfie: JSON.stringify(gov_selfie),
               phone_selfie: JSON.stringify(phone_selfie),
               face_login: JSON.stringify(face_login)
             }
-
-            console.log(flows);
-
-            console.log("client:::")
-            console.log(client);
-
             return res.render('login', {
               client,
               uid,
@@ -97,6 +89,7 @@ export default (app, provider) => {
                 prompt: debug(prompt),
               },
             });
+
           } else {
 
             return res.render('login', {
@@ -141,7 +134,11 @@ export default (app, provider) => {
     try {
       const { grantId, params, prompt: { name } } = await provider.interactionDetails(req, res);
       assert.equal(name, 'login');
-      const account = await Account.findByLogin(req.body.login);
+
+      const account = await Account.findByLogin({
+        token: req.body.id,
+        interviewId: req.body.interview
+      });
 
       let grant;
       if (grantId) {

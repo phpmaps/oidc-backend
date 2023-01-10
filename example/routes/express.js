@@ -57,6 +57,13 @@ export default (app, provider) => {
 
   app.get('/interaction/:uid', setNoCache, async (req, res, next) => {
     try {
+      console.log(":::express1-body");
+      console.log(req.body)
+      console.log("::::::");
+
+      console.log(":::express2-query");
+      console.log(req.query)
+      console.log("::::::");
       const {
         uid, prompt, params, session,
       } = await provider.interactionDetails(req, res);

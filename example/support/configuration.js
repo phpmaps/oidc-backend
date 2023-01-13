@@ -4,7 +4,7 @@ export default {
       client_id: 'ping',
       client_secret: 'abc',
       grant_types: ['refresh_token', 'authorization_code'],
-      redirect_uris: ['https://374c-76-95-83-56.ngrok.io/auth/callback', 'http://localhost:8080/auth/callback', 'https://oidcdebugger.com/debug', 'https://auth.pingone.com/09862d22-4554-4677-abf7-72fea5ae1fa0/davinci/oauth2/callback', 'https://auth.pingone.com/e08ece74-1d3a-48ef-b796-d031b34597d3/davinci/oauth2/callback'],
+      redirect_uris: ['http://54.91.193.152:8080/auth/callback', 'https://374c-76-95-83-56.ngrok.io/auth/callback', 'http://localhost:8080/auth/callback', 'https://oidcdebugger.com/debug', 'https://auth.pingone.com/09862d22-4554-4677-abf7-72fea5ae1fa0/davinci/oauth2/callback', 'https://auth.pingone.com/e08ece74-1d3a-48ef-b796-d031b34597d3/davinci/oauth2/callback'],
     }
   ],
   scopes: [

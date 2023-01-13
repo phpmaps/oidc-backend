@@ -168,6 +168,9 @@ export default (app, provider) => {
         interviewId: req.body.interview
       });
 
+      
+      //grant.addOIDCScope('oidc');
+
       let grant;
       if (grantId) {
         grant = await provider.Grant.find(grantId);

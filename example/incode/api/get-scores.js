@@ -23,6 +23,11 @@ export const getScores = async (interviewId, header) => {
 
         }
 
+
+        //Adding ID for mapping Ping
+        data.id = interviewId || 'NO_INTERVIEW_ID';
+
+
         if(scores.body?.idValidation?.idSpecific){
             const idSpecific = scores.body?.idValidation?.idSpecific;
             const barcode2DDetected = idSpecific.find(({ key }) => key === "barcode2DDetected");

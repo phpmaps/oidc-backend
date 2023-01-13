@@ -154,6 +154,16 @@ async function myCallback(f) {
             id: flow.token,
             interview: flow.interviewId
         });
+
+        // fetch(`https://ping.incodedemo.com/interaction/${uuid}/login`, {
+        //     method: 'POST',
+        //     credentials: "same-origin",
+        //     body: {
+        //         id: flow.token,
+        //         interview: flow.interviewId
+        //     }
+        //     //other options
+        // }).then(response => console.log("Response status: ", response.status));
     }
 }
 

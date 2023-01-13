@@ -1,3 +1,26 @@
+
+
+
+FROM --platform=linux/amd64 node:18.13
+
+WORKDIR /usr
+
+COPY package*.json ./
+
+RUN npm install --only=production
+
+COPY . ./
+
+EXPOSE 3000
+
+# Run the web service on container startup.
+CMD [ "node", "./example/express.js" ]
+
+
+
+````
+
+
 // eslint-disable-next-line import/order
 import * as attention from './helpers/attention.js';
 
@@ -47,18 +70,20 @@ async function getInteraction(req, res) {
   console.log(":::getinteraction4")
   const interaction = await this.Interaction.find(id);
   console.log(":::getinteraction5")
-  if (!interaction) {
-    console.log(":::getinteraction6")
-    //throw new SessionNotFound('interaction session not found');
-  }
-
-
+  // if (!interaction) {
+  //   console.log(":::getinteraction6")
+  //   throw new SessionNotFound('interaction session not found');
+  // }
+  console.log(":::interaction");
+  console.log(interaction);
   if (interaction?.session?.uid) {
     console.log(":::getinteraction7")
     const session = await this.Session.findByUid(interaction.session.uid);
     console.log(":::getinteraction8")
     if (!session) {
       console.log(":::getinteraction9")
+      console.log('session not found');
+
       throw new SessionNotFound('session not found');
     }
     if (interaction.session.accountId !== session.accountId) {
@@ -416,3 +441,7 @@ class Provider extends events.EventEmitter {
 }
 
 export default Provider;
+
+
+
+````

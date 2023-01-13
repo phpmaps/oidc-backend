@@ -10,6 +10,8 @@ import Account from '../support/account.js';
 
 import { init } from '../incode/init.js';
 
+import { errors } from '../../lib/index.js'; // from 'oidc-provider';
+
 const body = urlencoded({ extended: false });
 
 const keys = new Set();
@@ -23,9 +25,11 @@ const debug = (obj) => querystring.stringify(Object.entries(obj).reduce((acc, [k
 });
 
 export default (app, provider) => {
-  // if (provider?.errors) {
-  //   const { constructor: { errors: { SessionNotFound } } } = provider;
-  // }
+  if (provider?.errors) {
+    const { constructor: { errors: { SessionNotFound } } } = provider;
+  }
+
+  //const { SessionNotFound } = errors;
 
   app.use((req, res, next) => {
     const orig = res.render;
@@ -57,13 +61,8 @@ export default (app, provider) => {
 
   app.get('/interaction/:uid', setNoCache, async (req, res, next) => {
     try {
-      console.log(":::express1-body");
-      console.log(req.body)
-      console.log("::::::");
-
-      console.log(":::express2-query");
-      console.log(req.query)
-      console.log("::::::");
+      console.log("HEADERS - First Interaction");
+      console.log(req.headers);
       const {
         uid, prompt, params, session,
       } = await provider.interactionDetails(req, res);
@@ -72,9 +71,9 @@ export default (app, provider) => {
 
       switch (prompt.name) {
         case 'login': {
-          res.set("Content-Security-Policy", "connect 'https://demo-api.incodesmile.com'")
+          res.set("Content-Security-Policy", "connect 'https://demo-api.incodesmile.com' 'https://ping.incodedemo.com' 'http://localhost:3000'")
 
-          if (client?.clientId === 'ping') {
+          if (client.clientId === 'ping') {
             const gov_selfie = await init('63bbad0e38905700e07376dd');
             const phone_selfie = await init('63bbae1638905700e07377da');
             const face_login = await init('63bbae825b09e48e03781938');
@@ -83,6 +82,21 @@ export default (app, provider) => {
               phone_selfie: JSON.stringify(phone_selfie),
               face_login: JSON.stringify(face_login)
             }
+
+            console.log({
+              client,
+              uid,
+              flows,
+              details: prompt.details,
+              params,
+              title: 'Sign-in',
+              session: session ? debug(session) : undefined,
+              dbg: {
+                params: debug(params),
+                prompt: debug(prompt),
+              },
+            });
+
             return res.render('login', {
               client,
               uid,
@@ -140,7 +154,14 @@ export default (app, provider) => {
   app.post('/interaction/:uid/login', setNoCache, body, async (req, res, next) => {
     try {
       const { grantId, params, prompt: { name } } = await provider.interactionDetails(req, res);
+      console.log("HEADERS - Login");
+      console.log(req.headers);
       assert.equal(name, 'login');
+
+      console.log({
+        token: req.body.id,
+        interviewId: req.body.interview
+      })
 
       const account = await Account.findByLogin({
         token: req.body.id,
@@ -232,9 +253,11 @@ export default (app, provider) => {
   });
 
   app.use((err, req, res, next) => {
-    // if (err instanceof SessionNotFound) {
-    //   // handle interaction expired / session not found error
-    // }
+    //if (err instanceof SessionNotFound) {
+    console.log(":::catch all error route");
+    console.log(err);
+    // handle interaction expired / session not found error
+    //}
     next(err);
   });
 };

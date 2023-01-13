@@ -4,7 +4,7 @@ export default {
       client_id: 'ping',
       client_secret: 'abc',
       grant_types: ['refresh_token', 'authorization_code'],
-      redirect_uris: ['http://localhost:8080/auth/callback', 'https://oidcdebugger.com/debug', 'https://auth.pingone.com/09862d22-4554-4677-abf7-72fea5ae1fa0/davinci/oauth2/callback'],
+      redirect_uris: ['http://localhost:8080/auth/callback', 'https://oidcdebugger.com/debug', 'https://auth.pingone.com/09862d22-4554-4677-abf7-72fea5ae1fa0/davinci/oauth2/callback', 'https://auth.pingone.com/e08ece74-1d3a-48ef-b796-d031b34597d3/davinci/oauth2/callback'],
     }
   ],
   scopes: [
@@ -35,6 +35,8 @@ export default {
     revocation: { enabled: true }, // defaults to false
   },
   ttl: {
+    // Session: 24 * 60 * 60,//3600,
+    // Interaction: 24 * 60 * 60,//3600,
     AccessToken: 24 * 60 * 60,//3600,
     AuthorizationCode: 24 * 60 * 60,//600,
     ClientCredentials: 24 * 60 * 60,//600,

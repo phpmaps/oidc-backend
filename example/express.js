@@ -21,6 +21,7 @@ const { PORT = 3000, ISSUER = `https://ping.incodedemo.com` } = process.env;
 configuration.findAccount = Account.findAccount;
 
 const app = express();
+//app.use(express.json())
 app.use(express.static(path.join(__dirname, 'public')))
 
 const directives = helmet.contentSecurityPolicy.getDefaultDirectives();
@@ -46,8 +47,11 @@ try {
   const prod = process.env.NODE_ENV === 'production';
 
   const provider = new Provider(ISSUER, { adapter, ...configuration });
+  //Doogs
+  provider.proxy = true;
 
   if (prod) {
+    console.log('trust proxy')
     app.enable('trust proxy');
     provider.proxy = true;
 
@@ -73,7 +77,7 @@ try {
   routes(app, provider);
 
   console.log(":::ENVIRONMENT VARIABLES");
-  console.log(process.env);
+  //console.log(process.env);
 
   app.use(provider.callback());
   server = app.listen(PORT, () => {
